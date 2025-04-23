@@ -1,22 +1,60 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKER_IMAGE = 'nginx:alpine'
+        DOCKER_TAG = 'latest'
+    }
+
     stages {
-        stage('Clone Repository') {
+        stage('Checkout') {
             steps {
-                git 'https://github.com/HabibWaheed/web-test.git'
+                echo "Cloning repo..."
+                checkout scm
             }
         }
+
+        stage('List Files') {
+            steps {
+                echo "Showing project structure..."
+                sh 'ls -la'
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
-                sh 'docker-compose build'
+                echo "Building Docker image..."
+                script {
+                    docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
+                }
             }
         }
-        stage('Run Docker Container') {
+
+        stage('Archive Website Files') {
             steps {
-                sh 'docker-compose up -d'
+                echo "Archiving HTML/CSS/JS files..."
+                archiveArtifacts artifacts: '**/*.html, **/*.css, **/*.js', fingerprint: true
+            }
+        }
+
+        stage('Deploy (Optional)') {
+            steps {
+                echo "Deploying to Docker using Compose..."
+                script {
+                    sh 'docker-compose up -d'  // This will deploy using your docker-compose file
+                }
             }
         }
     }
+
+    post {
+        success {
+            echo 'Pipeline executed successfully.'
+        }
+        failure {
+            echo 'Pipeline failed. Check logs for more details.'
+        }
+    }
 }
+
 
