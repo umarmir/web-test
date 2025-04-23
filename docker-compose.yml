@@ -1,13 +1,6 @@
-version: '3'
 services:
   web:
     build: .
     ports:
-      - "8081:80"  # Change port as per your requirement. 8081:80 makes your app accessible on port 8081
-    networks:
-      - webnet
-
-networks:
-  webnet:
-    driver: bridge
+      - "8081:80"
 
