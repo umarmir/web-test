@@ -25,8 +25,16 @@ pipeline {
                 }
             }
         }
+
+        stage('Test Deployment') {
+            steps {
+                script {
+                    // Add a check to confirm the site is running
+                    sh 'curl http://localhost:8082'
+                }
+            }
+        }
     }
 }
-
 
 
