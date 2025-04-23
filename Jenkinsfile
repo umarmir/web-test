@@ -45,6 +45,17 @@ pipeline {
                 }
             }
         }
+
+        // Validate if the app is up and running
+        stage('Validate Deployment') {
+            steps {
+                script {
+                    echo 'Validating the deployment...'
+                    // This will test if the app is running on port 8081 (or whichever port you exposed in Docker)
+                    sh 'curl --fail http://localhost:8081 || exit 1'  // Exit with an error code if the server is not reachable
+                }
+            }
+        }
     }
 
     post {
