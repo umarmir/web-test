@@ -2,31 +2,21 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
+        stage('Clone Repository') {
             steps {
-                echo "Cloning repo..."
-                checkout scm
+                git 'https://github.com/HabibWaheed/web-test.git'
             }
         }
-
-        stage('List Files') {
+        stage('Build Docker Image') {
             steps {
-                echo "Showing project structure..."
-                sh 'ls -la'
+                sh 'docker-compose build'
             }
         }
-
-        stage('Archive Website Files') {
+        stage('Run Docker Container') {
             steps {
-                echo "Archiving HTML/CSS/JS files..."
-                archiveArtifacts artifacts: '**/*.html, **/*.css, **/*.js', fingerprint: true
-            }
-        }
-
-        stage('Deploy (Optional)') {
-            steps {
-                echo "You can add deployment logic here (e.g. FTP, SCP, etc)"
+                sh 'docker-compose up -d'
             }
         }
     }
 }
+
