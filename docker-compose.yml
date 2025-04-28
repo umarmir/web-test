@@ -1,15 +1,9 @@
-HEAD
 version: "3.8"
- 4e740a4 (Update docker-compose, add Node.js files, ignore node_modules)
 services:
   web:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
- HEAD
       - "8083:80"
 
-      - "8082:80"
-
- 4e740a4 (Update docker-compose, add Node.js files, ignore node_modules)
