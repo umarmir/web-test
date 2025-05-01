@@ -28,3 +28,4 @@ This project serves as a practical exercise to test your DevOps skills. It invol
 6. **Validation and Testing**
    - Add necessary validation and testing to confirm that the application runs correctly on a specific port. Ensure that all functionalities are working as expected and the deployment is stable.
 ___
+___
