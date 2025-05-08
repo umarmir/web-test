@@ -8,24 +8,51 @@ This project serves as a practical exercise to test your DevOps skills. It invol
 
 1. **Fork the Repository**
    - Begin by forking this repository to your own GitHub account.
+     
+2. **Ansible Automation (Same Local Machine)**
+   - Use Ansible to automate app deployment and updates:
+     - Create ansible/ folder with `host` file:
+       `[local]`
+       `127.0.0.1 ansible_connection=local`
+     - install and verify basics tools for this repo e.g. `git` and `docker`
 
-2. **Create a Separate Branch**
-   - Create a new branch named `devops-branch` in your forked repository. This branch will be used for all your DevOps-related tasks.
+3. **Clone and create a Separate Branch**
+   - Clone and create a new branch named `devops-branch` in your forked repository. This branch will be used for all your DevOps-related tasks.
 
-3. **Containerize the Application**
+4. **Containerize the Application**
    - Write a `Dockerfile` to containerize the e-commerce web application. Ensure that the Dockerfile is properly configured to build an image for the application. Apply best practices in Dockerfile creation, such as:
      - Minimizing the number of layers
      - Using a small base image
      - Caching dependencies effectively
-     - Cleaning up unnecessary files to reduce the image size
-
-4. **Deploy Using CI/CD Pipeline**
-   - Use the `Dockerfile` to deploy the application by setting up a CI/CD pipeline. This pipeline should be configured to run only for the `devops-branch`, not for the master branch.
+     - Cleaning up unnecessary files to reduce the image size 
 
 5. **Set Up Docker Compose**
    - Create a `docker-compose.yml` file to deploy the application using Docker Compose. Although PostgreSQL is not used in this application, ensure that the Docker Compose setup is properly configured for the application container.
 
-6. **Validation and Testing**
-   - Add necessary validation and testing to confirm that the application runs correctly on a specific port. Ensure that all functionalities are working as expected and the deployment is stable.
+6. **Kubernetes (Local with Minikube or Kind)**
+   - Deploy your app in a local Kubernetes cluster:
+   - Create:
+     - k8s/deployment.yaml
+     - k8s/service.yaml
+   - Start Minikube or Kind and apply:
+     - kubectl apply -f k8s/
+     - kubectl port-forward svc/ecommerce-service 8080:80
+
+7. **Deploy Using CI/CD Pipeline**
+   - Use the `Dockerfile` to deploy the application by setting up a CI/CD pipeline. This pipeline should be configured to run only for the `devops-branch`, not for the master branch.
+   - Optionally
+     - Create new branches named `compose-branch` and `k8s-branch` in your forked repository. These branch will be used for all your docker compose and Kubernetes related tasks.
+     - Use the `docker-compose.yml` to deploy the application by setting up a CI/CD pipeline. This pipeline should be configured to run only for the `compose-branch`, not for the master branch.
+     - Use the `deployment.yaml` and `service.yaml` to deploy the application by setting up a CI/CD pipeline. This pipeline should be configured to run only for the `k8s-branch`, not for the master branch.
+
+8. **Validation and Testing**
+   - Add necessary validation and testing in your CI/CD to confirm that the application runs correctly on a specific port. Ensure that all functionalities are working as expected and the deployment is stable.
+
+9. **Prometheus & Grafana Monitoring**
+   - Monitor Docker containers and host system locally:
+   - Create monitoring/docker-compose.yml with:
+     - prometheus
+     - node_exporter
+     - grafana
 ___
 ___
