@@ -55,4 +55,3 @@ This project serves as a practical exercise to test your DevOps skills. It invol
      - node_exporter
      - grafana
 ___
-___
