@@ -1,0 +1,41 @@
+---
+
+- name: Install and verify basic tools for devops repo
+  hosts: local
+  become: yes 
+
+  tasks:
+    - name: Update apt package cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Ensure git ins installed
+      apt:
+        name: git
+        state: present
+
+    - name: Verify git installation
+      command: git --version
+      register: git_version
+      changed_when: false
+
+    - name: Show git version 
+      debug:
+        msg: "Git version installed: {{ git_version.stdout }}"
+
+
+    - name: Ensure docker is installed 
+      apt:
+        name: docker.io
+        state: present
+
+
+    - name: Verify docker installation
+      command: docker --version
+      register: docker_version
+      changed_when: false
+
+    - name: Show docker version
+      debug:
+        msg: "Docker version installed: {{ docker_version.stdout }}"

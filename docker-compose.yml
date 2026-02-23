@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: loving_wing
+    build: .
+    ports:
+      - "8080:80"
+    restart: always

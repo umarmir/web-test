@@ -1,0 +1,31 @@
+name: Docker Compose Pipeline
+
+on:
+  push:
+    branches:
+      - compose-branch # Sirf compose branch par chalega
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Run Docker Compose
+        run: docker compose up -d --build
+
+      - name: Verify Running Containers
+        run: docker compose ps
+
+      - name: Wait for containers to start
+        run: sleep 5 # Nginx ko start hone ke liye 5 seconds dena
+
+      - name: Validate and Test Application on Port 8080
+        run: |
+          if curl -s -f http://localhost:8080 > /dev/null; then
+            echo "Success: Application is running perfectly on port 8080!"
+          else
+            echo "Error: Application failed to respond. Deployment unstable."
+            exit 1 # Yeh command pipeline ko Fail kar degi
+          fi

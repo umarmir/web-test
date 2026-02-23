@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ecommerce-service # Yeh naam aapki di gayi command se match karta hai
+spec:
+  selector:
+    app: ecommerce # Yeh Deployment ke labels se link karega
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80

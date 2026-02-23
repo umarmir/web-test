@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecommerce-deployment
+spec:
+  replicas: 2 # Hum chahte hain ke app ke 2 instances ek sath chalein
+  selector:
+    matchLabels:
+      app: ecommerce
+  template:
+    metadata:
+      labels:
+        app: ecommerce
+    spec:
+      containers:
+      - name: ecommerce-container
+        image: my-ecommerce-app:latest
+        imagePullPolicy: Never # Yeh line local image use karne ke liye zaroori hai
+        ports:
+        - containerPort: 80
