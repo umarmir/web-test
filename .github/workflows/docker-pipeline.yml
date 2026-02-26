@@ -1,0 +1,32 @@
+name: Docker Deploy Pipeline
+
+on:
+  push:
+    branches:
+      - devops # Sirf is branch par chalega
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Build Docker Image
+        run: docker build -t nginx:alpine .
+        
+      - name: Test Image
+        run: docker run -d -p 8080:80 nginx:alpine
+
+      # Validation and Testing
+      - name: Wait for container to start
+        run: sleep 5 # Container ko fully start hone ke liye 5 seconds dena
+
+      - name: Validate App on Port 8080
+        run: |
+          if curl -s -f http://localhost:8080 > /dev/null; then
+            echo "Success: Docker container is live and responding on port 8080!"
+          else
+            echo "Error: Docker container failed to respond."
+            exit 1 # Yeh pipeline ko Fail kar dega agar website na chali
+          fi
