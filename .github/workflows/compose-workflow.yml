@@ -1,0 +1,19 @@
+name: Deploy with Docker Compose
+
+on:
+  push:
+    branches:
+      - compose-branch
+    paths-ignore:
+      - 'Dockerfile'
+      - 'k8s/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Start services with Docker Compose
+        run: docker-compose up -d

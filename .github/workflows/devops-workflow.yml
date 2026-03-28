@@ -1,0 +1,22 @@
+name: Deploy with Dockerfile
+
+on:
+  push:
+    branches:
+      - devops-branch
+    paths-ignore:
+      - 'docker-compose.yml'
+      - 'k8s/**'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t web-test:${{ github.sha }} .
+
+      - name: Run container
+        run: docker run -d -p 8080:80 --name web-app web-test:${{ github.sha }}
