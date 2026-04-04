@@ -1,28 +1,28 @@
-name: Deploy with Kubernetes
+# name: Deploy with Kubernetes
 
-on:
-  push:
-    branches:
-      - k8s-branch
-    paths:
-      - 'k8s/**'
+# on:
+#   push:
+#     branches:
+#       - k8s-branch
+#     paths:
+#       - 'k8s/**'
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
 
-      - name: Set up kubectl
-        uses: azure/setup-kubectl@v3
-        with:
-          version: 'v1.28.0'
+#       - name: Set up kubectl
+#         uses: azure/setup-kubectl@v3
+#         with:
+#           version: 'v1.28.0'
 
-      - name: Configure kubectl for local cluster
-        run: |
-          # Assuming Minikube or Kind is running; adjust as needed
-          kubectl config use-context minikube  # or kind-web-test
+#       - name: Configure kubectl for local cluster
+#         run: |
+#           # Assuming Minikube or Kind is running; adjust as needed
+#           kubectl config use-context minikube  # or kind-web-test
 
-      - name: Deploy to Kubernetes
-        run: kubectl apply -f k8s/
+#       - name: Deploy to Kubernetes
+#         run: kubectl apply -f k8s/
